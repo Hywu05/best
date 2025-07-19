@@ -1,0 +1,52 @@
+From: security@paypal-secure.com
+To: user@example.com
+Subject: URGENT: Your PayPal account has been suspended
+Date: Mon, 15 Jan 2025 10:30:00 +0000
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head>
+    <title>PayPal Security Alert</title>
+</head>
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #003087; color: white; padding: 20px; text-align: center;">
+            <h1>PayPal Security Alert</h1>
+        </div>
+        
+        <div style="padding: 20px; background-color: #f8f9fa;">
+            <h2 style="color: #d32f2f;">URGENT ACTION REQUIRED</h2>
+            
+            <p>Dear PayPal User,</p>
+            
+            <p>We have detected suspicious activity on your PayPal account. Your account has been temporarily suspended for security reasons.</p>
+            
+            <p><strong>To restore access to your account immediately, please:</strong></p>
+            
+            <ol>
+                <li>Click the link below to verify your identity</li>
+                <li>Enter your login credentials</li>
+                <li>Update your security information</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="https://paypal-secure-verify.com/login" style="background-color: #0070ba; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    VERIFY YOUR ACCOUNT NOW
+                </a>
+            </div>
+            
+            <p style="color: #d32f2f; font-weight: bold;">⚠️ WARNING: If you do not verify within 24 hours, your account will be permanently closed.</p>
+            
+            <p>This is a limited time offer. Act now to avoid losing access to your funds.</p>
+            
+            <p>Best regards,<br>
+            PayPal Security Team</p>
+        </div>
+        
+        <div style="background-color: #f1f1f1; padding: 15px; font-size: 12px; color: #666;">
+            <p>This email was sent to protect your account security. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html> 

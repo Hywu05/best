@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Checker - Cảnh báo gần đây</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Đảm bảo dropdown menu không che mất nội dung */
+        .group > div {
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Đảm bảo main content có z-index thấp hơn */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header có z-index cao hơn */
+        header {
+            position: relative;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <img src="image/Pearson-BTEC-1024x647.png" alt="Logo Pearson" class="h-12 w-auto mr-2 rounded bg-white" style="object-fit:contain;">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                    <h1 class="text-2xl font-bold">Security Checker</h1>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:block">
+                    <ul class="flex space-x-8 items-center">
+                        <!-- Nhóm 1: Người dùng phổ thông -->
+                        <li class="relative group">
+                            <button class="flex items-center space-x-2 hover:text-blue-200 transition">
+                                <i class="fas fa-users"></i>
+                                <span>Người dùng phổ thông</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                                <div class="py-2">
+                                    <!-- Trang chủ -->
+                                    <a href="home.html" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-home mr-3 text-blue-600"></i>
+                                        <div>
+                                            <span class="font-medium">Trang chủ</span>
+                                            <p class="text-xs text-gray-500">Quay về giao diện chính, giới thiệu tính năng</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Kiểm tra lừa đảo - Link -->
+                                    <a href="index.html" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-shield-alt mr-3 text-green-600"></i>
+                                        <div>
+                                            <span class="font-medium">Kiểm tra lừa đảo</span>
+                                            <p class="text-xs text-gray-500">Email, Link, Số điện thoại, Tài khoản, Nội dung</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Cảnh báo gần đây -->
+                                    <a href="alerts.html" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center bg-blue-50">
+                                        <i class="fas fa-bell mr-3 text-yellow-600"></i>
+                                        <div>
+                                            <span class="font-medium">Cảnh báo gần đây</span>
+                                            <p class="text-xs text-gray-500">Danh sách các vụ lừa đảo mới được ghi nhận</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Gửi cảnh báo mới -->
+                                    <a href="report.html" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-paper-plane mr-3 text-purple-600"></i>
+                                        <div>
+                                            <span class="font-medium">Gửi cảnh báo mới</span>
+                                            <p class="text-xs text-gray-500">Báo cáo trường hợp nghi ngờ để kiểm tra</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Phòng tránh lừa đảo -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-book mr-3 text-indigo-600"></i>
+                                        <div>
+                                            <span class="font-medium">Phòng tránh lừa đảo</span>
+                                            <p class="text-xs text-gray-500">Mẹo, hướng dẫn nhận biết lừa đảo</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Tra cứu nhanh -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-search mr-3 text-red-600"></i>
+                                        <div>
+                                            <span class="font-medium">Tra cứu nhanh</span>
+                                            <p class="text-xs text-gray-500">Tìm kiếm email/link từng được cảnh báo</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Nhóm 2: Chức năng nâng cao -->
+                        <li class="relative group">
+                            <button class="flex items-center space-x-2 hover:text-blue-200 transition">
+                                <i class="fas fa-cogs"></i>
+                                <span>Chức năng nâng cao</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                                <div class="py-2">
+                                    <!-- Thống kê & Phân tích -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-chart-bar mr-3 text-blue-600"></i>
+                                        <div>
+                                            <span class="font-medium">Thống kê & Phân tích</span>
+                                            <p class="text-xs text-gray-500">Biểu đồ, bảng thống kê các loại lừa đảo</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Dành cho Doanh nghiệp -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-building mr-3 text-green-600"></i>
+                                        <div>
+                                            <span class="font-medium">Dành cho Doanh nghiệp</span>
+                                            <p class="text-xs text-gray-500">Phân loại CSDL email tự động, dashboard nâng cao</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Tài liệu & API -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-code mr-3 text-purple-600"></i>
+                                        <div>
+                                            <span class="font-medium">Tài liệu & API</span>
+                                            <p class="text-xs text-gray-500">Hướng dẫn cho nhà phát triển sử dụng API</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Nhóm 3: Thông tin hỗ trợ -->
+                        <li class="relative group">
+                            <button class="flex items-center space-x-2 hover:text-blue-200 transition">
+                                <i class="fas fa-question-circle"></i>
+                                <span>Thông tin hỗ trợ</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                                <div class="py-2">
+                                    <!-- Giải thích AI/ML hoạt động -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-brain mr-3 text-blue-600"></i>
+                                        <div>
+                                            <span class="font-medium">Giải thích AI/ML hoạt động</span>
+                                            <p class="text-xs text-gray-500">Mô hình AI/ML sử dụng để phân loại</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Hỏi đáp / FAQ -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-question mr-3 text-green-600"></i>
+                                        <div>
+                                            <span class="font-medium">Hỏi đáp / FAQ</span>
+                                            <p class="text-xs text-gray-500">Câu hỏi thường gặp và hướng dẫn cơ bản</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Điều khoản – Chính sách -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-file-contract mr-3 text-purple-600"></i>
+                                        <div>
+                                            <span class="font-medium">Điều khoản – Chính sách</span>
+                                            <p class="text-xs text-gray-500">Thông tin pháp lý, chính sách bảo mật</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Nhóm 4: Tài khoản & hệ thống -->
+                        <li class="relative group">
+                            <button class="flex items-center space-x-2 hover:text-blue-200 transition">
+                                <i class="fas fa-user-cog"></i>
+                                <span>Tài khoản & hệ thống</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div class="absolute left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                                <div class="py-2">
+                                    <!-- Đăng nhập / Tài khoản -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-sign-in-alt mr-3 text-blue-600"></i>
+                                        <div>
+                                            <span class="font-medium">Đăng nhập / Tài khoản</span>
+                                            <p class="text-xs text-gray-500">Đăng nhập cho người dùng đã đăng ký</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Ngôn ngữ -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-globe mr-3 text-green-600"></i>
+                                        <div>
+                                            <span class="font-medium">Ngôn ngữ</span>
+                                            <p class="text-xs text-gray-500">Chuyển đổi giữa Tiếng Việt / English</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <!-- Đăng ký nhận cảnh báo -->
+                                    <a href="#" class="block px-4 py-3 text-gray-800 hover:bg-blue-50 transition flex items-center">
+                                        <i class="fas fa-envelope mr-3 text-purple-600"></i>
+                                        <div>
+                                            <span class="font-medium">Đăng ký nhận cảnh báo</span>
+                                            <p class="text-xs text-gray-500">Nhận cảnh báo định kỳ qua email</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Language Switcher -->
+                        <li class="relative">
+                            <button id="languageToggle" class="flex items-center space-x-2 hover:text-blue-200 transition">
+                                <i class="fas fa-globe"></i>
+                                <span id="currentLanguage">VI</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                                <div class="py-1">
+                                    <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="vi">
+                                        <span class="text-sm">🇻🇳</span>
+                                        <span class="text-sm text-gray-800">Tiếng Việt</span>
+                                    </button>
+                                    <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="en">
+                                        <span class="text-sm">🇺🇸</span>
+                                        <span class="text-sm text-gray-800">English</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center space-x-4">
+                    <div class="relative">
+                        <button id="mobileLanguageToggle" class="flex items-center space-x-2 text-white hover:text-blue-200 transition">
+                            <i class="fas fa-globe"></i>
+                            <span id="mobileCurrentLanguage">VI</span>
+                        </button>
+                        <div id="mobileLanguageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                            <div class="py-1">
+                                <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="vi">
+                                    <span class="text-sm">🇻🇳</span>
+                                    <span class="text-sm text-gray-800">Tiếng Việt</span>
+                                </button>
+                                <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="en">
+                                    <span class="text-sm">🇺🇸</span>
+                                    <span class="text-sm text-gray-800">English</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="mobileMenuToggle" class="text-xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobileMenu" class="lg:hidden hidden mt-4 pb-4 border-t border-white/20">
+                <div class="grid grid-cols-1 gap-4 mt-4">
+                    <!-- Nhóm 1: Người dùng phổ thông -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 flex items-center">
+                            <i class="fas fa-users mr-2"></i>
+                            Người dùng phổ thông
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="home.html" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-home mr-3 text-blue-300"></i>
+                                <div>
+                                    <span class="font-medium">Trang chủ</span>
+                                    <p class="text-xs text-blue-200">Quay về giao diện chính</p>
+                                </div>
+                            </a>
+                            <a href="index.html" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-shield-alt mr-3 text-green-300"></i>
+                                <div>
+                                    <span class="font-medium">Kiểm tra lừa đảo</span>
+                                    <p class="text-xs text-blue-200">Email, Link, Số điện thoại, Tài khoản, Nội dung</p>
+                                </div>
+                            </a>
+                            <a href="alerts.html" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center bg-white/10">
+                                <i class="fas fa-bell mr-3 text-yellow-300"></i>
+                                <div>
+                                    <span class="font-medium">Cảnh báo gần đây</span>
+                                    <p class="text-xs text-blue-200">Danh sách các vụ lừa đảo mới</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-paper-plane mr-3 text-purple-300"></i>
+                                <div>
+                                    <span class="font-medium">Gửi cảnh báo mới</span>
+                                    <p class="text-xs text-blue-200">Báo cáo trường hợp nghi ngờ</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-book mr-3 text-indigo-300"></i>
+                                <div>
+                                    <span class="font-medium">Phòng tránh lừa đảo</span>
+                                    <p class="text-xs text-blue-200">Mẹo, hướng dẫn nhận biết</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-search mr-3 text-red-300"></i>
+                                <div>
+                                    <span class="font-medium">Tra cứu nhanh</span>
+                                    <p class="text-xs text-blue-200">Tìm kiếm email/link từng cảnh báo</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Nhóm 2: Chức năng nâng cao -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 flex items-center">
+                            <i class="fas fa-cogs mr-2"></i>
+                            Chức năng nâng cao
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-chart-bar mr-3 text-blue-300"></i>
+                                <div>
+                                    <span class="font-medium">Thống kê & Phân tích</span>
+                                    <p class="text-xs text-blue-200">Biểu đồ, bảng thống kê các loại lừa đảo</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-building mr-3 text-green-300"></i>
+                                <div>
+                                    <span class="font-medium">Dành cho Doanh nghiệp</span>
+                                    <p class="text-xs text-blue-200">Phân loại CSDL email tự động, dashboard</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-code mr-3 text-purple-300"></i>
+                                <div>
+                                    <span class="font-medium">Tài liệu & API</span>
+                                    <p class="text-xs text-blue-200">Hướng dẫn cho nhà phát triển</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Nhóm 3: Thông tin hỗ trợ -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 flex items-center">
+                            <i class="fas fa-question-circle mr-2"></i>
+                            Thông tin hỗ trợ
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-brain mr-3 text-blue-300"></i>
+                                <div>
+                                    <span class="font-medium">Giải thích AI/ML hoạt động</span>
+                                    <p class="text-xs text-blue-200">Mô hình AI/ML sử dụng để phân loại</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-question mr-3 text-green-300"></i>
+                                <div>
+                                    <span class="font-medium">Hỏi đáp / FAQ</span>
+                                    <p class="text-xs text-blue-200">Câu hỏi thường gặp và hướng dẫn</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-file-contract mr-3 text-purple-300"></i>
+                                <div>
+                                    <span class="font-medium">Điều khoản – Chính sách</span>
+                                    <p class="text-xs text-blue-200">Thông tin pháp lý, chính sách bảo mật</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Nhóm 4: Tài khoản & hệ thống -->
+                    <div class="bg-white/10 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold mb-3 flex items-center">
+                            <i class="fas fa-user-cog mr-2"></i>
+                            Tài khoản & hệ thống
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-sign-in-alt mr-3 text-blue-300"></i>
+                                <div>
+                                    <span class="font-medium">Đăng nhập / Tài khoản</span>
+                                    <p class="text-xs text-blue-200">Đăng nhập cho người dùng đã đăng ký</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-globe mr-3 text-green-300"></i>
+                                <div>
+                                    <span class="font-medium">Ngôn ngữ</span>
+                                    <p class="text-xs text-blue-200">Chuyển đổi giữa Tiếng Việt / English</p>
+                                </div>
+                            </a>
+                            <a href="#" class="block py-2 px-3 rounded hover:bg-white/10 transition flex items-center">
+                                <i class="fas fa-envelope mr-3 text-purple-300"></i>
+                                <div>
+                                    <span class="font-medium">Đăng ký nhận cảnh báo</span>
+                                    <p class="text-xs text-blue-200">Nhận cảnh báo định kỳ qua email</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-6xl mx-auto">
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Cảnh báo gần đây</h1>
+                <p class="text-xl text-gray-600">Danh sách các vụ lừa đảo mới được hệ thống ghi nhận và người dùng báo cáo</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center space-x-4">
+                        <label class="text-gray-700 font-medium">Lọc theo:</label>
+                        <select class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Tất cả</option>
+                            <option>Email lừa đảo</option>
+                            <option>Website giả mạo</option>
+                            <option>Số điện thoại lừa đảo</option>
+                            <option>Tài khoản giả mạo</option>
+                        </select>
+                        <select class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Tất cả thời gian</option>
+                            <option>Hôm nay</option>
+                            <option>Tuần này</option>
+                            <option>Tháng này</option>
+                        </select>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">
+                        <i class="fas fa-filter mr-2"></i>
+                        Lọc
+                    </button>
+                </div>
+            </div>
+
+            <!-- Alerts List -->
+            <div class="space-y-6">
+                <!-- Alert Item 1 -->
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-red-500">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-red-100 text-red-800 text-xs font-semibold px-3 py-1 rounded-full mr-3">Cao</span>
+                                <span class="text-gray-500 text-sm">2 giờ trước</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Email giả mạo ngân hàng Vietcombank</h3>
+                            <p class="text-gray-600 mb-3">Email từ địa chỉ support@vietcombank-secure.com yêu cầu xác nhận thông tin tài khoản. Đây là email lừa đảo giả mạo ngân hàng Vietcombank.</p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-envelope mr-1"></i> support@vietcombank-secure.com</span>
+                                <span><i class="fas fa-user mr-1"></i> Báo cáo bởi: 15 người dùng</span>
+                                <span><i class="fas fa-eye mr-1"></i> 1,234 lượt xem</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <button class="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Item 2 -->
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-yellow-500">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full mr-3">Trung bình</span>
+                                <span class="text-gray-500 text-sm">5 giờ trước</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Website giả mạo Facebook</h3>
+                            <p class="text-gray-600 mb-3">Website facebook-login-secure.com giả mạo giao diện đăng nhập Facebook để lấy cắp thông tin đăng nhập.</p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-link mr-1"></i> facebook-login-secure.com</span>
+                                <span><i class="fas fa-user mr-1"></i> Báo cáo bởi: 8 người dùng</span>
+                                <span><i class="fas fa-eye mr-1"></i> 567 lượt xem</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <button class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Item 3 -->
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-orange-500">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mr-3">Trung bình</span>
+                                <span class="text-gray-500 text-sm">1 ngày trước</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Số điện thoại lừa đảo mua hàng</h3>
+                            <p class="text-gray-600 mb-3">Số điện thoại 0123456789 giả mạo nhân viên Shopee gọi thông báo trúng thưởng và yêu cầu chuyển tiền phí vận chuyển.</p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-phone mr-1"></i> 0123456789</span>
+                                <span><i class="fas fa-user mr-1"></i> Báo cáo bởi: 12 người dùng</span>
+                                <span><i class="fas fa-eye mr-1"></i> 789 lượt xem</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <button class="bg-orange-100 hover:bg-orange-200 text-orange-700 px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alert Item 4 -->
+                <div class="bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
+                    <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-3">
+                                <span class="bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mr-3">Thấp</span>
+                                <span class="text-gray-500 text-sm">2 ngày trước</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Tài khoản Instagram giả mạo</h3>
+                            <p class="text-gray-600 mb-3">Tài khoản @instagram_support_official giả mạo trang hỗ trợ Instagram để lừa đảo thông tin người dùng.</p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-user mr-1"></i> @instagram_support_official</span>
+                                <span><i class="fas fa-user mr-1"></i> Báo cáo bởi: 5 người dùng</span>
+                                <span><i class="fas fa-eye mr-1"></i> 234 lượt xem</span>
+                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <button class="bg-green-100 hover:bg-green-200 text-green-700 px-4 py-2 rounded-lg transition">
+                                <i class="fas fa-exclamation-triangle mr-2"></i>
+                                Chi tiết
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-12">
+                <nav class="flex items-center space-x-2">
+                    <button class="px-3 py-2 text-gray-500 hover:text-gray-700 disabled:opacity-50">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="px-3 py-2 bg-blue-600 text-white rounded-lg">1</button>
+                    <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">2</button>
+                    <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">3</button>
+                    <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">4</button>
+                    <button class="px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">5</button>
+                    <button class="px-3 py-2 text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Security Checker. Bảo vệ bạn khỏi lừa đảo trực tuyến.</p>
+        </div>
+    </footer>
+
+    <script src="js/language-switcher.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Language dropdown toggle
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Mobile language dropdown toggle
+        document.getElementById('mobileLanguageToggle').addEventListener('click', function() {
+            const dropdown = document.getElementById('mobileLanguageDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Desktop navigation dropdown toggles
+        const dropdownButtons = document.querySelectorAll('.group > button');
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const dropdown = this.nextElementSibling;
+                const isHidden = dropdown.classList.contains('hidden');
+                
+                // Close all other dropdowns
+                document.querySelectorAll('.group > div').forEach(dd => {
+                    dd.classList.add('hidden');
+                });
+                
+                // Toggle current dropdown
+                if (isHidden) {
+                    dropdown.classList.remove('hidden');
+                }
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const languageToggle = document.getElementById('languageToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const mobileLanguageToggle = document.getElementById('mobileLanguageToggle');
+            const mobileLanguageDropdown = document.getElementById('mobileLanguageDropdown');
+
+            // Close language dropdowns
+            if (!languageToggle.contains(event.target) && !languageDropdown.contains(event.target)) {
+                languageDropdown.classList.add('hidden');
+            }
+
+            if (!mobileLanguageToggle.contains(event.target) && !mobileLanguageDropdown.contains(event.target)) {
+                mobileLanguageDropdown.classList.add('hidden');
+            }
+
+            // Close navigation dropdowns if clicking outside
+            if (!event.target.closest('.group')) {
+                document.querySelectorAll('.group > div').forEach(dd => {
+                    dd.classList.add('hidden');
+                });
+            }
+        });
+
+        // Close dropdowns when clicking on main content
+        document.querySelector('main').addEventListener('click', function() {
+            document.querySelectorAll('.group > div').forEach(dd => {
+                dd.classList.add('hidden');
+            });
+        });
+
+        // Handle sub-dropdown clicks (for nested menus)
+        const subDropdownButtons = document.querySelectorAll('.group/sub > button');
+        subDropdownButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const subDropdown = this.nextElementSibling;
+                subDropdown.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Switcher Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        #languageToggle {
+            position: relative;
+            z-index: 10;
+        }
+        
+        #languageDropdown {
+            animation: fadeInDown 0.2s ease-out;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .language-option {
+            transition: all 0.2s ease;
+        }
+        
+        .language-option:hover {
+            background-color: #f3f4f6;
+            transform: translateX(2px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Language Switcher Test</h1>
+        
+        <!-- Language Switcher -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test Language Switcher</h2>
+            
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-gray-600">Current Language: <span id="currentLanguage">EN</span></p>
+                    <p class="text-gray-600">Test Text: <span data-translate="test.text">Hello World</span></p>
+                </div>
+                
+                <div class="relative">
+                    <button id="languageToggle" class="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguageDisplay">EN</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                        <div class="py-1">
+                            <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="en">
+                                <span class="text-sm">🇺🇸</span>
+                                <span class="text-sm text-gray-800">English</span>
+                            </button>
+                            <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="vi">
+                                <span class="text-sm">🇻🇳</span>
+                                <span class="text-sm text-gray-800">Tiếng Việt</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Debug Info -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Debug Information</h2>
+            <div id="debugInfo" class="text-sm text-gray-600">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Language Switcher for testing
+        class SimpleLanguageSwitcher {
+            constructor() {
+                this.currentLanguage = 'en';
+                this.translations = {
+                    en: {
+                        'test.text': 'Hello World'
+                    },
+                    vi: {
+                        'test.text': 'Xin chào thế giới'
+                    }
+                };
+                
+                console.log('SimpleLanguageSwitcher constructor called');
+                this.init();
+            }
+            
+            init() {
+                this.setupEventListeners();
+                this.updateDebugInfo();
+            }
+            
+            setupEventListeners() {
+                console.log('Setting up event listeners...');
+                
+                const languageToggle = document.getElementById('languageToggle');
+                const languageDropdown = document.getElementById('languageDropdown');
+                
+                console.log('Elements found:', {
+                    languageToggle: languageToggle,
+                    languageDropdown: languageDropdown
+                });
+                
+                if (languageToggle) {
+                    languageToggle.addEventListener('click', (e) => {
+                        console.log('Language toggle clicked');
+                        e.stopPropagation();
+                        languageDropdown.classList.toggle('hidden');
+                        this.updateDebugInfo();
+                    });
+                } else {
+                    console.error('Language toggle not found');
+                }
+                
+                const languageOptions = document.querySelectorAll('.language-option');
+                console.log('Language options found:', languageOptions.length);
+                
+                languageOptions.forEach((option, index) => {
+                    option.addEventListener('click', (e) => {
+                        console.log('Language option clicked:', option.getAttribute('data-lang'));
+                        e.stopPropagation();
+                        const lang = option.getAttribute('data-lang');
+                        this.switchLanguage(lang);
+                        languageDropdown.classList.add('hidden');
+                    });
+                });
+                
+                document.addEventListener('click', () => {
+                    if (languageDropdown) languageDropdown.classList.add('hidden');
+                });
+                
+                console.log('Event listeners setup completed');
+            }
+            
+            switchLanguage(lang) {
+                console.log('Switching to language:', lang);
+                this.currentLanguage = lang;
+                
+                const currentLanguageDisplay = document.getElementById('currentLanguageDisplay');
+                if (currentLanguageDisplay) {
+                    currentLanguageDisplay.textContent = lang.toUpperCase();
+                }
+                
+                this.updatePageContent();
+                this.updateDebugInfo();
+            }
+            
+            updatePageContent() {
+                const lang = this.currentLanguage;
+                const t = this.translations[lang];
+                
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (t[key]) {
+                        element.textContent = t[key];
+                    }
+                });
+            }
+            
+            updateDebugInfo() {
+                const debugInfo = document.getElementById('debugInfo');
+                if (debugInfo) {
+                    debugInfo.innerHTML = `
+                        <p><strong>Current Language:</strong> ${this.currentLanguage}</p>
+                        <p><strong>Language Toggle Found:</strong> ${document.getElementById('languageToggle') ? 'Yes' : 'No'}</p>
+                        <p><strong>Language Dropdown Found:</strong> ${document.getElementById('languageDropdown') ? 'Yes' : 'No'}</p>
+                        <p><strong>Language Options Found:</strong> ${document.querySelectorAll('.language-option').length}</p>
+                        <p><strong>Dropdown Hidden:</strong> ${document.getElementById('languageDropdown')?.classList.contains('hidden') ? 'Yes' : 'No'}</p>
+                        <p><strong>Test Text:</strong> ${this.translations[this.currentLanguage]['test.text']}</p>
+                    `;
+                }
+            }
+        }
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing SimpleLanguageSwitcher...');
+            window.simpleLanguageSwitcher = new SimpleLanguageSwitcher();
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Checker Demo - Test Advanced Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-2xl"></i>
+                    <h1 class="text-2xl font-bold">Security Checker Demo</h1>
+                </div>
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-6">
+                        <li><a href="index.html" class="hover:text-blue-200 transition">Main App</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-blue-200 transition">API</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Demo Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Advanced Security Features Demo</h2>
+            
+            <!-- Test Categories -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- URL Tests -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-blue-600">
+                        <i class="fas fa-link mr-2"></i>URL Tests
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="testURL('http://suspicious-site.tk')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Suspicious Domain (.tk)
+                        </button>
+                        <button onclick="testURL('http://goog1e.com')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Spoofed Brand (goog1e.com)
+                        </button>
+                        <button onclick="testURL('http://bit.ly/suspicious')" class="w-full text-left p-2 bg-yellow-50 hover:bg-yellow-100 rounded text-sm">
+                            URL Shortener (bit.ly)
+                        </button>
+                        <button onclick="testURL('https://google.com')" class="w-full text-left p-2 bg-green-50 hover:bg-green-100 rounded text-sm">
+                            Safe Domain (google.com)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phone Tests -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-green-600">
+                        <i class="fas fa-phone mr-2"></i>Phone Tests
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="testPhone('+234 123 456 789')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Nigerian Scam (+234)
+                        </button>
+                        <button onclick="testPhone('+84 96 123 4567')" class="w-full text-left p-2 bg-green-50 hover:bg-green-100 rounded text-sm">
+                            Vietnamese Safe (+84)
+                        </button>
+                        <button onclick="testPhone('1900 123 456')" class="w-full text-left p-2 bg-yellow-50 hover:bg-yellow-100 rounded text-sm">
+                            Premium Rate (1900)
+                        </button>
+                        <button onclick="testPhone('0123456789')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Known Scam Pattern
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Content Tests -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-600">
+                        <i class="fas fa-comment-dots mr-2"></i>Content Tests
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="testContent('Bạn đã trúng thưởng 1 tỷ đồng')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Money Promise (VN)
+                        </button>
+                        <button onclick="testContent('Your account will be suspended')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Account Threat (EN)
+                        </button>
+                        <button onclick="testContent('Khẩn cấp: Cập nhật thông tin ngay')" class="w-full text-left p-2 bg-yellow-50 hover:bg-yellow-100 rounded text-sm">
+                            Urgent Language (VN)
+                        </button>
+                        <button onclick="testContent('Hello, this is a normal message')" class="w-full text-left p-2 bg-green-50 hover:bg-green-100 rounded text-sm">
+                            Safe Content (EN)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Email Tests -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-orange-600">
+                        <i class="fas fa-envelope mr-2"></i>Email Tests
+                    </h3>
+                    <div class="space-y-2">
+                        <button onclick="testEmail('user@vietcombank-vn.com')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Spoofed Bank Domain
+                        </button>
+                        <button onclick="testEmail('user@paypa1.com')" class="w-full text-left p-2 bg-red-50 hover:bg-red-100 rounded text-sm">
+                            Spoofed PayPal
+                        </button>
+                        <button onclick="testEmail('user@gmail.com')" class="w-full text-left p-2 bg-green-50 hover:bg-green-100 rounded text-sm">
+                            Safe Email
+                        </button>
+                        <button onclick="testEmail('user@fake-site.xyz')" class="w-full text-left p-2 bg-yellow-50 hover:bg-yellow-100 rounded text-sm">
+                            Suspicious Extension
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Results -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                    <i class="fas fa-chart-bar mr-2"></i>Test Results
+                </h3>
+                <div id="testResults" class="space-y-4">
+                    <p class="text-gray-500 text-center">Click on any test button above to see results here</p>
+                </div>
+            </div>
+
+            <!-- Advanced Features -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Feature List -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                        <i class="fas fa-star mr-2"></i>Advanced Features
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Domain spoofing detection
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            URL shortener analysis
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            International phone number detection
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Vietnamese carrier identification
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Multi-language content analysis
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Suspicious keyword detection
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Risk level classification
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-2"></i>
+                            Detailed recommendations
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Risk Levels -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-800">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Risk Levels
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded">
+                            <span class="font-semibold text-green-800">🟢 Safe (80-100)</span>
+                            <span class="text-sm text-green-600">No threats detected</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-yellow-50 rounded">
+                            <span class="font-semibold text-yellow-800">🟡 Suspicious (60-79)</span>
+                            <span class="text-sm text-yellow-600">Some suspicious elements</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-orange-50 rounded">
+                            <span class="font-semibold text-orange-800">🟠 High Risk (40-59)</span>
+                            <span class="text-sm text-orange-600">Multiple warning signs</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-red-50 rounded">
+                            <span class="font-semibold text-red-800">🔴 Critical (0-39)</span>
+                            <span class="text-sm text-red-600">Likely scam/phishing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Security Checker Demo. Advanced phishing and scam detection system.</p>
+            <p class="text-gray-400 mt-2">Test the enhanced security features with various examples</p>
+        </div>
+    </footer>
+
+    <!-- Load analyzer modules -->
+    <script src="js/link-analyzer.js"></script>
+    <script src="js/phone-analyzer.js"></script>
+    <script src="js/content-analyzer.js"></script>
+    <script src="js/safe-checker.js"></script>
+
+    <script>
+        // Test functions
+        function testURL(url) {
+            const result = analyzeLink(url);
+            displayTestResult('URL', url, result);
+        }
+
+        function testPhone(phone) {
+            const result = analyzePhoneNumber(phone);
+            displayTestResult('Phone', phone, result);
+        }
+
+        function testContent(content) {
+            const result = analyzeContent(content);
+            displayTestResult('Content', content, result);
+        }
+
+        function testEmail(email) {
+            const result = analyzeEmail(email);
+            displayTestResult('Email', email, result);
+        }
+
+        function displayTestResult(type, input, result) {
+            const resultsDiv = document.getElementById('testResults');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            const riskColor = getRiskColor(result.riskLevel);
+            const riskIcon = getRiskIcon(result.riskLevel);
+            
+            const resultHTML = `
+                <div class="border-l-4 ${riskColor} bg-gray-50 p-4 rounded">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="font-semibold text-gray-800">
+                                ${riskIcon} ${type} Test - ${result.riskLevel.toUpperCase()}
+                            </h4>
+                            <p class="text-sm text-gray-600">Input: <code class="bg-gray-200 px-1 rounded">${input}</code></p>
+                        </div>
+                        <span class="text-xs text-gray-500">${timestamp}</span>
+                    </div>
+                    <div class="text-sm">
+                        <p class="mb-2"><strong>Score:</strong> ${result.score}/100</p>
+                        <p class="mb-2"><strong>Safe:</strong> ${result.isSafe ? '✅ Yes' : '❌ No'}</p>
+                        ${result.warnings.length > 0 ? `
+                            <p class="mb-2"><strong>Warnings:</strong></p>
+                            <ul class="list-disc list-inside text-red-600 mb-2">
+                                ${result.warnings.map(warning => `<li>${warning}</li>`).join('')}
+                            </ul>
+                        ` : ''}
+                        ${result.details ? `
+                            <p class="mb-2"><strong>Details:</strong></p>
+                            <pre class="text-xs bg-gray-100 p-2 rounded overflow-x-auto">${JSON.stringify(result.details, null, 2)}</pre>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = resultHTML + resultsDiv.innerHTML;
+        }
+
+        function getRiskColor(riskLevel) {
+            switch(riskLevel) {
+                case 'low': return 'border-green-500';
+                case 'medium': return 'border-yellow-500';
+                case 'high': return 'border-orange-500';
+                case 'critical': return 'border-red-500';
+                default: return 'border-gray-500';
+            }
+        }
+
+        function getRiskIcon(riskLevel) {
+            switch(riskLevel) {
+                case 'low': return '🟢';
+                case 'medium': return '🟡';
+                case 'high': return '🟠';
+                case 'critical': return '🔴';
+                default: return '⚪';
+            }
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Security Checker Demo loaded');
+            console.log('Available functions: analyzeLink, analyzePhoneNumber, analyzeContent, analyzeEmail');
+        });
+    </script>
+</body>
+</html> 

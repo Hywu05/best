@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Checker Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Security Checker Test</h1>
+        
+        <!-- Input Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test Input</h2>
+            <div class="flex gap-4">
+                <input type="text" id="testInput" placeholder="Enter email, URL, or phone" class="flex-1 px-4 py-2 border rounded-lg">
+                <button id="testBtn" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+                    Test Analysis
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="testResults" class="bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 class="text-xl font-semibold mb-4">Test Results</h2>
+            <div id="testOutput" class="text-gray-700"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('testBtn').addEventListener('click', function() {
+            const input = document.getElementById('testInput').value;
+            const results = document.getElementById('testResults');
+            const output = document.getElementById('testOutput');
+            
+            if (!input) {
+                alert('Please enter something to test');
+                return;
+            }
+            
+            // Show results
+            results.classList.remove('hidden');
+            
+            // Test the analysis function
+            try {
+                const result = generateSecurityResult(input);
+                output.innerHTML = `
+                    <h3 class="font-semibold mb-2">Analysis Result:</h3>
+                    <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto">${JSON.stringify(result, null, 2)}</pre>
+                `;
+            } catch (error) {
+                output.innerHTML = `
+                    <h3 class="font-semibold mb-2 text-red-600">Error:</h3>
+                    <pre class="bg-red-100 p-4 rounded text-sm">${error.message}</pre>
+                `;
+            }
+        });
+        
+        // Basic test function
+        function generateSecurityResult(value) {
+            const randomResult = Math.floor(Math.random() * 4);
+            let status, statusColor, statusIcon, category, details, recommendations;
+            
+            const analysisResults = {
+                emailContent: 'Basic email analysis completed',
+                urlAnalysis: 'Basic URL analysis completed',
+                phoneCheck: 'Basic phone analysis completed',
+                senderCheck: 'Basic sender verification completed',
+                websiteCheck: 'Basic website analysis completed',
+                docCheck: 'Basic document analysis completed'
+            };
+            
+            switch(randomResult) {
+                case 0: // Safe
+                    status = 'Safe';
+                    statusColor = 'green';
+                    statusIcon = 'fa-check-circle';
+                    category = 'Safe';
+                    details = 'This content appears to be safe.';
+                    recommendations = [
+                        'Always verify the sender before sharing sensitive information.',
+                        'Keep your software and antivirus updated.',
+                        'Use strong, unique passwords for important accounts.'
+                    ];
+                    break;
+                case 1: // Suspicious
+                    status = 'Suspicious';
+                    statusColor = 'yellow';
+                    statusIcon = 'fa-exclamation-triangle';
+                    category = 'Suspicious';
+                    details = 'This content shows some suspicious characteristics.';
+                    recommendations = [
+                        'Do not provide personal or financial information.',
+                        'Verify the source through official channels.',
+                        'Report any suspicious activity.'
+                    ];
+                    break;
+                case 2: // High Risk
+                    status = 'High Risk';
+                    statusColor = 'orange';
+                    statusIcon = 'fa-times-circle';
+                    category = 'High Risk';
+                    details = 'This content is highly suspicious.';
+                    recommendations = [
+                        'Avoid interacting with this content.',
+                        'Report to relevant authorities.',
+                        'Block the source if possible.'
+                    ];
+                    break;
+                case 3: // Critical
+                    status = 'Dangerous';
+                    statusColor = 'red';
+                    statusIcon = 'fa-skull-crossbones';
+                    category = 'Critical';
+                    details = 'This content is extremely dangerous.';
+                    recommendations = [
+                        'Do not interact with this content.',
+                        'Report immediately to authorities.',
+                        'Change passwords if you already interacted.'
+                    ];
+                    break;
+            }
+            
+            return {
+                status,
+                statusColor,
+                statusIcon,
+                category,
+                details,
+                recommendations,
+                analysisResults,
+                riskLevel: 100 - (randomResult * 25)
+            };
+        }
+    </script>
+</body>
+</html> 

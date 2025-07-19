@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        #languageToggle {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        #languageDropdown {
+            animation: fadeInDown 0.2s ease-out;
+            z-index: 1000;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            min-width: 140px;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .language-option {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+        
+        .language-option:hover {
+            background-color: #f3f4f6;
+            transform: translateX(2px);
+        }
+        
+        /* Force show dropdown when not hidden */
+        #languageDropdown:not(.hidden) {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Dropdown Test</h1>
+        
+        <!-- Test Dropdown -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test Language Dropdown</h2>
+            
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-gray-600">Current Language: <span id="currentLanguage">EN</span></p>
+                </div>
+                
+                <div class="relative">
+                    <button id="languageToggle" class="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                        <i class="fas fa-globe"></i>
+                        <span id="currentLanguageDisplay">EN</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50">
+                        <div class="py-1">
+                            <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="en">
+                                <span class="text-sm">🇺🇸</span>
+                                <span class="text-sm text-gray-800">English</span>
+                            </button>
+                            <button class="language-option w-full text-left px-4 py-2 hover:bg-gray-100 transition flex items-center space-x-2" data-lang="vi">
+                                <span class="text-sm">🇻🇳</span>
+                                <span class="text-sm text-gray-800">Tiếng Việt</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Debug Info -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Debug Information</h2>
+            <div id="debugInfo" class="text-sm text-gray-600">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            const languageToggle = document.getElementById('languageToggle');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const debugInfo = document.getElementById('debugInfo');
+            
+            console.log('Elements found:', {
+                languageToggle: languageToggle,
+                languageDropdown: languageDropdown
+            });
+            
+            function updateDebugInfo() {
+                if (debugInfo) {
+                    debugInfo.innerHTML = `
+                        <p><strong>Language Toggle Found:</strong> ${languageToggle ? 'Yes' : 'No'}</p>
+                        <p><strong>Language Dropdown Found:</strong> ${languageDropdown ? 'Yes' : 'No'}</p>
+                        <p><strong>Dropdown Classes:</strong> ${languageDropdown ? languageDropdown.className : 'N/A'}</p>
+                        <p><strong>Dropdown Style Display:</strong> ${languageDropdown ? languageDropdown.style.display : 'N/A'}</p>
+                        <p><strong>Dropdown Hidden Class:</strong> ${languageDropdown ? languageDropdown.classList.contains('hidden') : 'N/A'}</p>
+                        <p><strong>Dropdown Computed Display:</strong> ${languageDropdown ? window.getComputedStyle(languageDropdown).display : 'N/A'}</p>
+                        <p><strong>Dropdown Computed Visibility:</strong> ${languageDropdown ? window.getComputedStyle(languageDropdown).visibility : 'N/A'}</p>
+                        <p><strong>Dropdown Computed Opacity:</strong> ${languageDropdown ? window.getComputedStyle(languageDropdown).opacity : 'N/A'}</p>
+                    `;
+                }
+            }
+            
+            if (languageToggle) {
+                languageToggle.addEventListener('click', function(e) {
+                    console.log('Language toggle clicked');
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const isHidden = languageDropdown.classList.contains('hidden');
+                    console.log('Dropdown hidden:', isHidden);
+                    
+                    if (isHidden) {
+                        console.log('Showing dropdown...');
+                        languageDropdown.classList.remove('hidden');
+                        languageDropdown.style.display = 'block';
+                        languageDropdown.style.visibility = 'visible';
+                        languageDropdown.style.opacity = '1';
+                    } else {
+                        console.log('Hiding dropdown...');
+                        languageDropdown.classList.add('hidden');
+                        languageDropdown.style.display = 'none';
+                    }
+                    
+                    console.log('Dropdown classes after toggle:', languageDropdown.className);
+                    console.log('Dropdown style display:', languageDropdown.style.display);
+                    
+                    updateDebugInfo();
+                });
+            }
+            
+            const languageOptions = document.querySelectorAll('.language-option');
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    console.log('Language option clicked:', this.getAttribute('data-lang'));
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const lang = this.getAttribute('data-lang');
+                    document.getElementById('currentLanguage').textContent = lang.toUpperCase();
+                    document.getElementById('currentLanguageDisplay').textContent = lang.toUpperCase();
+                    
+                    languageDropdown.classList.add('hidden');
+                    languageDropdown.style.display = 'none';
+                    
+                    updateDebugInfo();
+                });
+            });
+            
+            document.addEventListener('click', function(e) {
+                const isClickInsideToggle = languageToggle && languageToggle.contains(e.target);
+                const isClickInsideDropdown = languageDropdown && languageDropdown.contains(e.target);
+                
+                if (!isClickInsideToggle && !isClickInsideDropdown) {
+                    console.log('Click outside, closing dropdown');
+                    languageDropdown.classList.add('hidden');
+                    languageDropdown.style.display = 'none';
+                    updateDebugInfo();
+                }
+            });
+            
+            updateDebugInfo();
+        });
+    </script>
+</body>
+</html> 
